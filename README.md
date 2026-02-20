@@ -17,7 +17,7 @@ Alternatively you can add it to your **qmk_firmware/modules** folder.
 ### Available modules
 |Module|Description|
 |---|---|
-|[Magnetic encoder](https://github.com/EverydayErgo/qmk_modules/magnetic_encoder) | Support for AS5600 and MT6701 sensors over I2C |
+|[Magnetic encoder](https://github.com/EverydayErgo/qmk_modules/tree/main/magnetic_encoder) | Support for AS5600 and MT6701 sensors over I2C |
 
 
 
