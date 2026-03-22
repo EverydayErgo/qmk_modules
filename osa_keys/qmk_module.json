@@ -1,0 +1,58 @@
+{
+    "module_name": "OS Aware keys",
+    "maintainer": "EverydayErgo",
+    "keycodes": [
+        {
+            "key": "OA_VIRTUAL_DESKTOP_LEFT",
+            "aliases": ["OA_VDL"]            
+        },
+        {
+            "key": "OA_VIRTUAL_DESKTOP_RIGHT",
+            "aliases": ["OA_VDR"]            
+        },
+        {
+            "key": "OA_WEB_REFRESH",
+            "aliases": ["OA_WREF"]            
+        },
+        {
+            "key": "OA_WEB_BACK",
+            "aliases": ["OA_WBAK"]            
+        },
+        {
+            "key": "OA_WEB_FORWARD",
+            "aliases": ["OA_WFWD"]            
+        },
+        {
+            "key": "OA_APP_QUIT",
+            "aliases": ["OA_APQT"]            
+        },
+        {
+            "key": "OA_APP_VIEW",
+            "aliases": ["OA_APPV"]            
+        },
+        {
+            "key": "OA_APP_WINDOWS",
+            "aliases": ["OA_APPW"]            
+        },
+        {
+            "key": "OA_ZOOM_IN",
+            "aliases": ["OA_ZOIN"]            
+        },
+        {
+            "key": "OA_ZOOM_OUT",
+            "aliases": ["OA_ZOUT"]            
+        },
+        {
+            "key": "OA_ZOOM_RESET",
+            "aliases": ["OA_ZORT"]            
+        },
+        {
+            "key": "OA_LEFT_CONTROL",
+            "aliases": ["OA_LCTL"]            
+        },
+        {
+            "key": "OA_LEFT_COMMAND",
+            "aliases": ["OA_LGUI"]            
+        }
+    ]   
+}
