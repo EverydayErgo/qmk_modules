@@ -45,14 +45,6 @@
         {
             "key": "OA_ZOOM_RESET",
             "aliases": ["OA_ZORT"]            
-        },
-        {
-            "key": "OA_LEFT_CONTROL",
-            "aliases": ["OA_LCTL"]            
-        },
-        {
-            "key": "OA_LEFT_COMMAND",
-            "aliases": ["OA_LGUI"]            
         }
     ]   
 }
