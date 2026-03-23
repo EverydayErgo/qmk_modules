@@ -1,3 +1,6 @@
+#define SCROLL_DIVISOR_H 8.0
+#define SCROLL_DIVISOR_V 8.0
+
 typedef enum {
     NOT_FORCED,
     FORCED_MACOS,

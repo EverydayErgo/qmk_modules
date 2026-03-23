@@ -45,6 +45,30 @@
         {
             "key": "OA_ZOOM_RESET",
             "aliases": ["OA_ZORT"]            
+        },
+        {
+            "key": "OA_MOUSE_WHEEL_UP",
+            "aliases": ["OA_WHLU"]
+        },
+        {
+            "key": "OA_MOUSE_WHEEL_DOWN",
+            "aliases": ["OA_WHLD"]
+        },
+        {
+            "key": "OA_MOUSE_WHEEL_LEFT",
+            "aliases": ["OA_WHLL"]
+        },
+        {
+            "key": "OA_MOUSE_WHEEL_RIGHT",
+            "aliases": ["OA_WHLR"]
+        },
+        {
+            "key": "OA_MOUSE_SCROLL_VERTICAL",
+            "aliases": ["OA_PDSV"]
+        },
+        {
+            "key": "OA_MOUSE_SCROLL_HORIZONTAL",
+            "aliases": ["OA_PDSH"]
         }
     ]   
 }
