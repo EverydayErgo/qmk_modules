@@ -25,6 +25,8 @@ will be swapped with
 ```
 Basically **Control** will be swapped with **Command/Win**. This also applies to **Mod-Tap** and **One Shot Keys**.
 
+Same applies to **MS_WH\*** keys, responsible for scrolling. Module handles these keycodes and applies OS aware direction scrolling, this means no more reversed scrolling on MacOS compared to Windows.
+
 ## Overrides 
 In case operating system wasn't detected properly it can be overridden by using built in functions.
 ```C
@@ -99,9 +101,5 @@ List of available keys with equivalent shortcuts.
 |OA_ZOIN|Ctrl +         |Command +      |Zoom in                        |
 |OA_ZOUT|Ctrl -         |Command -      |Zoom out                       |
 |OA_ZORT|Ctrl+0         |Command+0      |Zoom reset (100%)              |
-|OA_WHLD|Scroll Down    |Scroll Up      |Mouse scroll vertical          |
-|OA_WHLU|Scroll Up      |Scroll Down    |Mouse scroll vertical          |
-|OA_WHLL|Scroll Left    |Scroll Right   |Mouse scroll horizontal        |
-|OA_WHLR|Scroll Right   |Scroll Left    |Mouse scroll horizontal        |
 |OA_PDSV|Scroll Vertical|Scroll Vertical|Hold key to scroll with pointing device vertical|
 |OA_PDSH|Scroll Horizontal|Scroll Horizontal|Hold key to scroll with pointing device horizontal|

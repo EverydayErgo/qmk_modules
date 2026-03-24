@@ -225,7 +225,7 @@ bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         
-        case OA_WHLU:
+        case MS_WHLU:
             if(record->event.pressed) {
                 if(osa_detected_host_os()==OS_MACOS) {
                     mouse_report.v = -1;
@@ -236,7 +236,7 @@ bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {
             pointing_device_set_report(mouse_report);
             return false;
 
-        case OA_WHLD:
+        case MS_WHLD:
             if(record->event.pressed) {
                 if(osa_detected_host_os()==OS_MACOS) {
                     mouse_report.v = 1;
@@ -247,7 +247,7 @@ bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {
             pointing_device_set_report(mouse_report);
             return false;
 
-        case OA_WHLL:
+        case MS_WHLL:
             if(record->event.pressed) {
                 if(osa_detected_host_os()==OS_MACOS) {
                     mouse_report.h = 1;
@@ -258,7 +258,7 @@ bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {
             pointing_device_set_report(mouse_report);
             return false;
 
-        case OA_WHLR:
+        case MS_WHLR:
             if(record->event.pressed) {
                 if(osa_detected_host_os()==OS_MACOS) {
                     mouse_report.h = -1;
