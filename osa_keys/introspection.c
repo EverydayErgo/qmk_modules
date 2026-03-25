@@ -37,79 +37,6 @@ bool osa_matrix_is_on(uint8_t row, uint8_t col) {
     return matrix_get_row(row) & (1 << col);
 }
 
-bool process_record_macos(uint16_t keycode, keyrecord_t *record) {
-    if(record->event.pressed) {
-        if((keycode>=QK_MOD_TAP && keycode<=QK_MOD_TAP_MAX) && (!record->tap.count)) {
-            if(QK_MODS_GET_MODS(keycode) & MOD_BIT(KC_LCTL)) {
-                add_mods(MOD_BIT(KC_LGUI));
-                return false;
-            }
-            if(QK_MODS_GET_MODS(keycode) & MOD_BIT(KC_LGUI)) {
-                add_mods(MOD_BIT(KC_LCTL));
-                return false;
-            }
-             if(QK_MODS_GET_MODS(keycode) & MOD_BIT(KC_RCTL)) {
-                add_mods(MOD_BIT(KC_RGUI));
-                return false;
-            }
-            if(QK_MODS_GET_MODS(keycode) & MOD_BIT(KC_RGUI)) {
-                add_mods(MOD_BIT(KC_RCTL));
-                return false;
-            }
-        }else if(keycode>=QK_ONE_SHOT_MOD && keycode<=QK_ONE_SHOT_MOD_MAX) {
-            if(QK_ONE_SHOT_MOD_GET_MODS(keycode) & MOD_LCTL) {
-                add_oneshot_mods(MOD_BIT(KC_LGUI));
-                return false;
-            }
-            if(QK_ONE_SHOT_MOD_GET_MODS(keycode) & MOD_LGUI) {
-                add_oneshot_mods(MOD_BIT(KC_LCTL));
-                return false;
-            }
-            if(QK_ONE_SHOT_MOD_GET_MODS(keycode) & MOD_BIT(KC_RCTL)) {
-                add_oneshot_mods(MOD_BIT(KC_RGUI));
-                return false;
-            }
-            if(QK_ONE_SHOT_MOD_GET_MODS(keycode) & MOD_BIT(KC_RGUI)) {
-                add_oneshot_mods(MOD_BIT(KC_RCTL));
-                return false;
-            }
-        }else if(keycode==KC_LCTL) {
-            register_code(KC_LGUI);
-            return false;
-        }else if(keycode==KC_LGUI) {
-            register_code(KC_LCTL);
-            return false;
-        }
-    }else { 
-        //RELEASE
-        if((keycode>=QK_MOD_TAP && keycode<=QK_MOD_TAP_MAX) && (!record->tap.count)) {
-            if(QK_MODS_GET_MODS(keycode) & MOD_BIT(KC_LCTL)) {
-                del_mods(MOD_BIT(KC_LGUI));
-                return true;
-            }
-            if(QK_MODS_GET_MODS(keycode) & MOD_BIT(KC_LGUI)) {
-                del_mods(MOD_BIT(KC_LCTL));
-                return true;
-            }
-            if(QK_MODS_GET_MODS(keycode) & MOD_BIT(KC_RCTL)) {
-                del_mods(MOD_BIT(KC_RGUI));
-                return true;
-            }
-            if(QK_MODS_GET_MODS(keycode) & MOD_BIT(KC_RGUI)) {
-                del_mods(MOD_BIT(KC_RCTL));
-                return true;
-            }
-        }else if(keycode==KC_LCTL) {
-            unregister_code(KC_LGUI);
-            return false;
-        }else if(keycode==KC_LGUI) {
-            unregister_code(KC_LCTL);
-            return false;
-        }
-    }
-    return true;
-}
-
 bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {   
     report_mouse_t mouse_report = pointing_device_get_report();
     switch(keycode) {
@@ -285,9 +212,6 @@ bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
     }
-    if(osa_detected_host_os()==OS_MACOS)
-        return process_record_macos(keycode, record);
-
     return true;
 }
 
@@ -328,3 +252,18 @@ report_mouse_t pointing_device_task_osa_keys(report_mouse_t mouse_report) {
     } 
     return mouse_report;
 } 
+
+bool process_detected_host_os_osa_keys(os_variant_t os) {
+    if(os==OS_MACOS) {
+        keymap_config.swap_lctl_lgui = true;
+        keymap_config.swap_rctl_rgui = true;
+        eeconfig_update_keymap(&keymap_config);
+        clear_keyboard();
+    }else {
+        keymap_config.swap_lctl_lgui = false;
+        keymap_config.swap_rctl_rgui = false;
+        eeconfig_update_keymap(&keymap_config);
+        clear_keyboard();
+    }
+    return true;
+}
