@@ -53,6 +53,22 @@
         {
             "key": "OA_MOUSE_SCROLL_HORIZONTAL",
             "aliases": ["OA_PDSH"]
+        },
+        {
+            "key": "OA_LEFT_CONTROL",
+            "aliases": ["OA_LCTL"]
+        },
+        {
+            "key": "OA_LEFT_GUI",
+            "aliases": ["OA_LGUI"]
+        },
+        {
+            "key": "OA_RIGHT_CONTROL",
+            "aliases": ["OA_RCTL"]
+        },
+        {
+            "key": "OA_RIGHT_GUI",
+            "aliases": ["OA_RGUI"]
         }
     ]   
 }

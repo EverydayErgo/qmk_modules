@@ -19,5 +19,6 @@ Alternatively you can add it to your **qmk_firmware/modules** folder.
 |---|---|
 |[Magnetic encoder](https://github.com/EverydayErgo/qmk_modules/tree/main/magnetic_encoder) | Support for AS5600 and MT6701 sensors over I2C |
 |[OS Aware keys](https://github.com/EverydayErgo/qmk_modules/tree/main/osa_keys)| Operating system dependent keys/functionalities|
+|[Encoders in matrix](https://github.com/EverydayErgo/qmk_modules/tree/main/encoders_in_matrix)|Never again run out of free pins for your encoders by putting them in key matrix|
 
 

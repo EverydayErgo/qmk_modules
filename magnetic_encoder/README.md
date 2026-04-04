@@ -22,14 +22,14 @@ Processing happens in:
 ```
 There's a weakly defined function to handle the processed angle. You will get the type of the encoder from which the readout is coming as well as it's direction in boolean type. **True == Up**, **False == Down**. This could be implemented like this:
 ```C
-void magnetic_encoder_update_user(magnetic_encoder_kind_t magnetic_encoder, bool direction) {  
+void magnetic_encoder_update_user(magnetic_encoder_kind_t magnetic_encoder, bool clockwise) {  
   if(magnetic_encoder == AS5600) {
-    if(direction)
+    if(clockwise)
       print("\nAS5600: Up");
     else
       print("\nAS5600: Down");
   }else {
-    if(direction)
+    if(clockwise)
       print("\nMT6701: Up");
     else
       print("\nMT6701: Down"); 

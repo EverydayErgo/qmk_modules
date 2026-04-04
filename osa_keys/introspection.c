@@ -1,13 +1,14 @@
 #include QMK_KEYBOARD_H
 #include "pointing_device.h"
 
-
 ASSERT_COMMUNITY_MODULES_MIN_API_VERSION(1,0,0);
 
 static osa_forced_os_t osa_os = NOT_FORCED;
 
 static bool osa_pds_vertical_scroll = false;
 static bool osa_pds_horizontal_scroll = false;
+
+__attribute__((weak)) void osa_scroll_update_user(void);
 
 os_variant_t osa_detected_host_os(void) {
     switch(osa_os) {
@@ -36,12 +37,12 @@ void force_windows(void) {
 bool osa_matrix_is_on(uint8_t row, uint8_t col) {
     return matrix_get_row(row) & (1 << col);
 }
+bool osa_process_keycode(uint16_t keycode, bool pressed) {
 
-bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {   
     report_mouse_t mouse_report = pointing_device_get_report();
     switch(keycode) {
         case OA_VDL:
-            if(record->event.pressed) {
+            if(pressed) {
                 if(osa_detected_host_os()==OS_MACOS) {
                     tap_code16(LCTL(KC_LEFT));
                 }else {
@@ -51,7 +52,7 @@ bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {
             return false;
 
         case OA_VDR:
-            if(record->event.pressed) {
+            if(pressed) {
                 if(osa_detected_host_os()==OS_MACOS) {
                     tap_code16(LCTL(KC_RIGHT));
                 }else {
@@ -62,7 +63,7 @@ bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {
 
         case OA_APQT:
             if(osa_detected_host_os()==OS_MACOS) {
-                if(record->event.pressed) {
+                if(pressed) {
                     register_code(KC_LGUI);
                     register_code(KC_Q);
                 }else {
@@ -75,7 +76,7 @@ bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {
             return false;
         
         case OA_APPV:
-            if(record->event.pressed) {
+            if(pressed) {
                 if(osa_detected_host_os()==OS_MACOS) {
                     tap_code16(LCTL(KC_UP));
                 }else {
@@ -85,15 +86,15 @@ bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {
             return false;
 
         case OA_APPW:
-            if(record->event.pressed) {
+            if(pressed) {
                 if(osa_detected_host_os()==OS_MACOS) {
                     tap_code16(LCTL(KC_DOWN));
                 }
             }
             return false;
-
+        
         case OA_WBAK:
-            if(record->event.pressed) {
+            if(pressed) {
                 if(osa_detected_host_os()==OS_MACOS) {
                     tap_code16(LGUI(KC_LBRC));
                 }else {
@@ -101,9 +102,9 @@ bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
-
+        
         case OA_WFWD:
-            if(record->event.pressed) {
+            if(pressed) {
                 if(osa_detected_host_os()==OS_MACOS) {
                     tap_code16(LGUI(KC_RBRC));
                 }else {
@@ -113,7 +114,7 @@ bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {
             return false;
 
         case OA_WREF:
-            if(record->event.pressed) {
+            if(pressed) {
                 if(osa_detected_host_os()==OS_MACOS) {
                     tap_code16(LGUI(KC_R));
                 }else {
@@ -123,7 +124,7 @@ bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {
             return false;
         
         case OA_ZOIN:
-            if(record->event.pressed) {
+            if(pressed) {
                 if(osa_detected_host_os()==OS_MACOS) {
                     tap_code16(LGUI(KC_PPLS));
                 }else {
@@ -133,7 +134,7 @@ bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {
             return false;
 
         case OA_ZOUT:
-            if(record->event.pressed) {
+            if(pressed) {
                 if(osa_detected_host_os()==OS_MACOS) {
                     tap_code16(LGUI(KC_PMNS));
                 }else {
@@ -143,7 +144,7 @@ bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {
             return false;
 
         case OA_ZORT:
-            if(record->event.pressed) {
+            if(pressed) {
                 if(osa_detected_host_os()==OS_MACOS) {
                     tap_code16(LGUI(KC_0));
                 }else {
@@ -153,7 +154,7 @@ bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {
             return false;
         
         case MS_WHLU:
-            if(record->event.pressed) {
+            if(pressed) {
                 if(osa_detected_host_os()==OS_MACOS) {
                     mouse_report.v = -1;
                 }else {
@@ -164,7 +165,7 @@ bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {
             return false;
 
         case MS_WHLD:
-            if(record->event.pressed) {
+            if(pressed) {
                 if(osa_detected_host_os()==OS_MACOS) {
                     mouse_report.v = 1;
                 }else {
@@ -175,7 +176,7 @@ bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {
             return false;
 
         case MS_WHLL:
-            if(record->event.pressed) {
+            if(pressed) {
                 if(osa_detected_host_os()==OS_MACOS) {
                     mouse_report.h = 1;
                 }else {
@@ -186,7 +187,7 @@ bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {
             return false;
 
         case MS_WHLR:
-            if(record->event.pressed) {
+            if(pressed) {
                 if(osa_detected_host_os()==OS_MACOS) {
                     mouse_report.h = -1;
                 }else {
@@ -197,7 +198,7 @@ bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {
             return false;
         
         case OA_PDSV:
-            if(record->event.pressed) {
+            if(pressed) {
                 osa_pds_vertical_scroll = true;
             }else {
                 osa_pds_vertical_scroll = false;
@@ -205,14 +206,86 @@ bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {
             return false;
 
         case OA_PDSH:
-            if(record->event.pressed) {
+            if(pressed) {
                 osa_pds_horizontal_scroll = true;
             }else {
                 osa_pds_horizontal_scroll = false;
             }
             return false;
+
+        case OA_LCTL:
+            if(pressed) {
+                if(osa_detected_host_os()==OS_MACOS) {
+                    register_code(KC_LGUI);
+                }else {
+                    register_code(KC_LCTL);
+                }
+            }else {       
+                if(osa_detected_host_os()==OS_MACOS) {
+                    unregister_code(KC_LGUI);
+                }else {
+                    unregister_code(KC_LCTL);
+                }
+            }
+            return false;
+
+        case OA_LGUI:
+            if(pressed) {
+                if(osa_detected_host_os()==OS_MACOS) {
+                    register_code(KC_LCTL);
+                }else {
+                    register_code(KC_LGUI);
+                } 
+            }else {
+                if(osa_detected_host_os()==OS_MACOS) {
+                    unregister_code(KC_LCTL);
+                }else {
+                    unregister_code(KC_LGUI);
+                }
+            }
+            return false;
+
+        case OA_RCTL:
+            if(pressed) {
+                if(osa_detected_host_os()==OS_MACOS) {
+                    register_code(KC_LGUI);
+                }else {
+                    register_code(KC_RCTL);
+                }
+            }else {       
+                if(osa_detected_host_os()==OS_MACOS) {
+                    unregister_code(KC_LGUI);
+                }else {
+                    unregister_code(KC_RCTL);
+                }
+            }
+            return false;
+
+        case OA_RGUI:
+            if(pressed) {
+                if(osa_detected_host_os()==OS_MACOS) {
+                    register_code(KC_LCTL);
+                }else {
+                    register_code(KC_RGUI);
+                } 
+            }else {
+                if(osa_detected_host_os()==OS_MACOS) {
+                    unregister_code(KC_LCTL);
+                }else {
+                    unregister_code(KC_RGUI);
+                }
+            }
+            return false;
     }
     return true;
+}
+
+bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {   
+    return osa_process_keycode(keycode, record->event.pressed);
+}
+
+void housekeeping_task_osa_keys(void) {
+    osa_scroll_update_user();
 }
 
 report_mouse_t pointing_device_task_osa_keys(report_mouse_t mouse_report) {
@@ -266,4 +339,24 @@ bool process_detected_host_os_osa_keys(os_variant_t os) {
         clear_keyboard();
     }
     return true;
+}
+
+void osa_tap_code(uint16_t keycode) {
+    osa_process_keycode(keycode, true);
+}
+
+void osa_activate_vertical_scroll(void) {
+    osa_pds_vertical_scroll = true;
+}
+
+void osa_deactivate_vertical_scroll(void) {
+    osa_pds_vertical_scroll = false;
+}
+
+void osa_activate_horizontal_scroll(void) {
+    osa_pds_horizontal_scroll = true;
+}
+
+void osa_deactivate_horizontal_scroll(void) {
+    osa_pds_horizontal_scroll = false;
 }

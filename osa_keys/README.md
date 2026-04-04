@@ -47,7 +47,7 @@ void leader_end_user(void) {
 ## Key/Pointing device scrolling
 There are two methods to scroll exposed by this module.
 1. By using exposed keys - put any of the scroll related keys from the table below in your keymap just like any other key. When pressed it will output OS proper scroll event. Works best with rotary encodes, i.e. [MEH-01](https://github.com/EverydayErgo/MEH01)
-2. By using pointing device (trackball, touchpad etc.) if your keyboard is equipped with one. Two methods available here: 
+2. By using pointing device (trackball, touchpad etc.) if your keyboard is equipped with one. Three methods available here: 
    * **Scroll keys**  
       * for vertical scroll with pointing device put somewhere in your layout:
       ```C
@@ -86,6 +86,33 @@ There are two methods to scroll exposed by this module.
     ![](img/matrix_debug.png)
     Press the desired key and read the row/column pair from the debug output where '1' shows up. This is very similar to [QMK Bootmagic](https://docs.qmk.fm/features/bootmagic). Now no matter what function is assigned to that key (except maybe for enter DFU mode) whenever it's pressed it will trigger scroll with pointing device.
 
+    * **Custom trigger** - You can trigger horizontal/vertical scroll with pointing device programmatically. Module defines functions to activate/deactivate particular scroll:
+    ```C
+      void osa_activate_vertical_scroll(void);
+      void osa_deactivate_vertical_scroll(void);
+      void osa_activate_horizontal_scroll(void);
+      void osa_deactivate_horizontal_scroll(void);
+   ``` 
+   There's a weakly define functions which is called from module **housekeeping** function. You can override it to enable/disable particular scroll based on your specific conditions.
+   ```C
+      __attribute__((weak)) void osa_scroll_update_user(void);
+   ```
+   Such specific use case could be something like this:
+   ```C
+    void osa_scroll_update_user(void) {
+
+    if(is_pseudolayer_on(PDScroll_V))
+        osa_activate_vertical_scroll();
+    else
+        osa_deactivate_vertical_scroll();
+
+    if(is_pseudolayer_on(PDScroll_H))
+        osa_activate_horizontal_scroll();
+    else
+        osa_deactivate_horizontal_scroll();
+    }
+   ```
+
 ## Keys
 List of available keys with equivalent shortcuts.
 |OSA Key|Windows      |MacOS            |Description                    |
@@ -103,3 +130,36 @@ List of available keys with equivalent shortcuts.
 |OA_ZORT|Ctrl+0         |Command+0      |Zoom reset (100%)              |
 |OA_PDSV|Scroll Vertical|Scroll Vertical|Hold key to scroll with pointing device vertical|
 |OA_PDSH|Scroll Horizontal|Scroll Horizontal|Hold key to scroll with pointing device horizontal|
+
+Below keys are to be used in special cases where for various reasons QMK processing has been swapped to custom logic etc. Like for example in [Buttery Engine](https://github.com/EverydayErgo/buttery_engine)
+|OSA Key|Windows        |MacOS          |Description                    |
+|-------|---------------|---------------|-------------------------------|
+|OA_LCTL|Ctrl           |Command        |                               |
+|OA_LGUI|Win            |Control        |                               |
+|OA_RCTL|Right Ctrl     |Command        |                               |
+|OA_RGUI|Right Win      |Control        |                               |
+
+## Useful functions
+If you need to send out a keycode that's part of the **OSA Module** you can do it with:
+```C
+  void osa_tap_code(uint16_t keycode);
+```
+For example:
+```C
+  void encoders_in_matrix_update_user(uint8_t encoder, bool clockwise) {
+    switch(encoder) {
+      case 0:
+        if(clockwise)
+          osa_tap_code(MS_WHLU);
+        else
+          osa_tap_code(MS_WHLD);
+        break;
+      case 1:
+        if(clockwise)
+          osa_tap_code(OA_ZOUT);
+        else
+          osa_tap_code(OA_ZOIN);
+        break;
+    }
+  }
+```
