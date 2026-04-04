@@ -3,7 +3,7 @@
 This module helps when you are pin constrained but still need to add more encoders to your build. Instead of wasting precious pins for direct encoder connection, put them in your key matrix like ordinary keys and enjoy nearly unlimited number of encoders on your build.
 
 ## How to use
-You can find [full example source here.](/src)
+You can find [full example source here.](https://github.com/EverydayErgo/qmk_modules/tree/main/encoders_in_matrix/src)
 
 First you need to have you encoders properly wired into your key/switch matrix. 
 ![](img/schematic.png)
