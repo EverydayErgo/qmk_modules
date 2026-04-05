@@ -16,4 +16,3 @@ void osa_activate_vertical_scroll(void);
 void osa_deactivate_vertical_scroll(void);
 void osa_activate_horizontal_scroll(void);
 void osa_deactivate_horizontal_scroll(void);
-void osa_scroll_update_user(void);

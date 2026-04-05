@@ -69,6 +69,38 @@
         {
             "key": "OA_RIGHT_GUI",
             "aliases": ["OA_RGUI"]
+        },
+        {
+            "key": "OA_WINDOW_SNAP_LEFT",
+            "aliases": ["OA_WSLT"]
+        },
+        {
+            "key": "OA_WINDOW_SNAP_RIGHT",
+            "aliases": ["OA_WSRT"]
+        },
+        {
+            "key": "OA_WINDOW_SNAP_TOP",
+            "aliases": ["OA_WSTO"]
+        },
+        {
+            "key": "OA_WINDOW_SNAP_BOTTOM",
+            "aliases": ["OA_WSBO"]
+        },
+        {
+            "key": "OA_WINDOW_SNAP_LEFT_UP_QUARTER",
+            "aliases": ["OA_WSTL"]
+        },
+        {
+            "key": "OA_WINDOW_SNAP_LEFT_DOWN_QUARTER",
+            "aliases": ["OA_WSBL"]
+        },
+        {
+            "key": "OA_WINDOW_SNAP_RIGHT_UP_QUARTER",
+            "aliases": ["OA_WSTR"]
+        },
+        {
+            "key": "OA_WINDOW_SNAP_RIGHT_DOWN_QUARTER",
+            "aliases": ["OA_WSBR"]
         }
     ]   
 }

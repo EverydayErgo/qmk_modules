@@ -1,14 +1,13 @@
 #include QMK_KEYBOARD_H
 #include "pointing_device.h"
 
-ASSERT_COMMUNITY_MODULES_MIN_API_VERSION(1,0,0);
 
 static osa_forced_os_t osa_os = NOT_FORCED;
 
 static bool osa_pds_vertical_scroll = false;
 static bool osa_pds_horizontal_scroll = false;
 
-__attribute__((weak)) void osa_scroll_update_user(void);
+extern matrix_row_t matrix[MATRIX_ROWS];
 
 os_variant_t osa_detected_host_os(void) {
     switch(osa_os) {
@@ -35,8 +34,9 @@ void force_windows(void) {
 }
 
 bool osa_matrix_is_on(uint8_t row, uint8_t col) {
-    return matrix_get_row(row) & (1 << col);
+     return (matrix[row] & ((matrix_row_t)1 << col));
 }
+
 bool osa_process_keycode(uint16_t keycode, bool pressed) {
 
     report_mouse_t mouse_report = pointing_device_get_report();
@@ -276,16 +276,84 @@ bool osa_process_keycode(uint16_t keycode, bool pressed) {
                 }
             }
             return false;
+
+        case OA_WSLT:
+            if(pressed) {
+                if(osa_detected_host_os()==OS_MACOS) {
+                    tap_code16(LSFT(LCTL(LGUI(KC_J))));
+                }else {
+                    tap_code16(LGUI(KC_LEFT));
+                }
+            }
+            return false;
+
+        case OA_WSRT:
+            if(pressed) {
+                if(osa_detected_host_os()==OS_MACOS) {
+                    tap_code16(LSFT(LCTL(LGUI(KC_L))));
+                }else {
+                    tap_code16(LGUI(KC_RIGHT));
+                }
+            }
+            return false;
+
+       case OA_WSTO:
+            if(pressed) {
+                if(osa_detected_host_os()==OS_MACOS) {
+                    tap_code16(LSFT(LCTL(LGUI(KC_I))));
+                }else {
+                    tap_code16(LGUI(KC_UP));
+                }
+            }
+            return false;
+
+        case OA_WSBO:
+            if(pressed) {
+                if(osa_detected_host_os()==OS_MACOS) {
+                    tap_code16(LSFT(LCTL(LGUI(KC_COMMA))));
+                }else {
+                    tap_code16(LGUI(KC_DOWN));
+                }
+            }
+            return false;
+
+        case OA_WSTL:
+            if(pressed) {
+                if(osa_detected_host_os()==OS_MACOS) {
+                    tap_code16(LSFT(LCTL(LGUI(KC_U))));
+                }
+            }
+            return false;
+        
+        case OA_WSBL:
+            if(pressed) {
+                if(osa_detected_host_os()==OS_MACOS) {
+                    tap_code16(LSFT(LCTL(LGUI(KC_M))));
+                }
+            }
+            return false;
+
+        case OA_WSTR:
+            if(pressed) {
+                if(osa_detected_host_os()==OS_MACOS) {
+                    tap_code16(LSFT(LCTL(LGUI(KC_O))));
+                }
+            }
+            return false;
+
+        case OA_WSBR:
+            if(pressed) {
+                if(osa_detected_host_os()==OS_MACOS) {
+                    tap_code16(LSFT(LCTL(LGUI(KC_DOT))));
+                }
+            }
+            return false;
     }
     return true;
 }
 
 bool process_record_osa_keys(uint16_t keycode, keyrecord_t *record) {   
     return osa_process_keycode(keycode, record->event.pressed);
-}
-
-void housekeeping_task_osa_keys(void) {
-    osa_scroll_update_user();
 }
 
 report_mouse_t pointing_device_task_osa_keys(report_mouse_t mouse_report) {

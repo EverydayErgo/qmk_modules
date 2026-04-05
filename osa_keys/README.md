@@ -139,6 +139,18 @@ Below keys are to be used in special cases where for various reasons QMK process
 |OA_RCTL|Right Ctrl     |Command        |                               |
 |OA_RGUI|Right Win      |Control        |                               |
 
+**Window snapping keys** - for Windows it's a standard set of keys, quarters are not directly supported because they behave different than on MacOS. On MacOS you will have to go to your Settings->Keyboard->Keyboard Shortcuts->Windows and there key in new shortcuts. This is because by default MacOS is using Globe key which is not available on QMK and most probably anywhere else due to obscure nature of this key.
+|OSA Key|Windows        |MacOS          |Description                    |
+|-------|---------------|---------------|-------------------------------|
+|OA_WSLT|               |               |Snap left half                 |
+|OA_WSRT|               |               |Snap right half                |
+|OA_WSTO|               |               |Snap top half                  |
+|OA_WSBO|               |               |Snap bottom half               |
+|OA_WSTL|Not available  |               |Snap top left quarter          |
+|OA_WSBL|Not available  |               |Snap bottom left quarter       |
+|OA_WSTR|Not available  |               |Snap top right quarter         |
+|OA_WSBR|Not available  |               |Snap bottom right quarter      |
+
 ## Useful functions
 If you need to send out a keycode that's part of the **OSA Module** you can do it with:
 ```C
