@@ -374,6 +374,8 @@ report_mouse_t pointing_device_task_osa_keys(report_mouse_t mouse_report) {
         scroll_accumulated_v -= (int8_t)scroll_accumulated_v;
         mouse_report.x = 0;
         mouse_report.y = 0;        
+        
+        return mouse_report;
     }
 
 #if defined(PDS_HORIZONTAL_SCROLL_ROW) && defined(PDS_HORIZONTAL_SCROLL_COLUMN)    
@@ -390,7 +392,18 @@ report_mouse_t pointing_device_task_osa_keys(report_mouse_t mouse_report) {
         scroll_accumulated_h -= (int8_t)scroll_accumulated_h;
         mouse_report.x = 0;
         mouse_report.y = 0;                                                   
+
+        return mouse_report;
     } 
+    if(mouse_report.v!=0) {
+        if(osa_detected_host_os()==OS_MACOS) {
+            mouse_report.v *= -1; 
+        }
+    }else if(mouse_report.h!=0) {
+        if(osa_detected_host_os()==OS_MACOS) {
+            mouse_report.h *= -1;
+        }
+    }
     return mouse_report;
 } 
 
