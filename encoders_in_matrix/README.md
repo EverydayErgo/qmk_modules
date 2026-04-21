@@ -69,7 +69,6 @@ EIM_ENCODERS_BEGIN
   EIM_ENCRF(name, pad_a, pad_b, resolution) //custom resolution and flipped
 EIM_ENCODERS_END 
 ```
-You can also flip direction by swapping **PADA** with **PADB**.
 **PADA/PADB** macro has such format:
 ```C
   EIM_PADA(row, column) 
@@ -125,8 +124,6 @@ Based on your preference there are two ways to handle what action is performed w
               tap_code(KC_UP);
             else
               tap_code(KC_DOWN);
-            break;
-            default:  //required
             break;
         }
     }

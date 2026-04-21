@@ -26,8 +26,6 @@ void encoders_in_matrix_update_user(enc_names_t encoder, bool clockwise) {
       else
         tap_code(KC_DOWN);
       break;
-      default:
-      break;
   }
 }
 
