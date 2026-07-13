@@ -27,10 +27,18 @@ os_variant_t osa_detected_host_os(void) {
 
 void force_macos(void) {
     osa_os = FORCED_MACOS;
+    keymap_config.swap_lctl_lgui = true;
+    keymap_config.swap_rctl_rgui = true;
+    eeconfig_update_keymap(&keymap_config);
+    clear_keyboard();
 }
 
 void force_windows(void) {
     osa_os = FORCED_WINDOWS;
+    keymap_config.swap_lctl_lgui = false;
+    keymap_config.swap_rctl_rgui = false;
+    eeconfig_update_keymap(&keymap_config);
+    clear_keyboard();
 }
 
 bool osa_matrix_is_on(uint8_t row, uint8_t col) {
@@ -71,7 +79,13 @@ bool osa_process_keycode(uint16_t keycode, bool pressed) {
                     unregister_code(KC_LGUI);
                 }
             }else {
-                tap_code16(LALT(KC_F4));
+                if(pressed) {
+                    register_code(KC_LALT);
+                    register_code(KC_F4);
+                }else {
+                    unregister_code(KC_F4);
+                    unregister_code(KC_LALT);
+                }
             }
             return false;
         
@@ -162,6 +176,7 @@ bool osa_process_keycode(uint16_t keycode, bool pressed) {
                 }
             }
             pointing_device_set_report(mouse_report);
+            pointing_device_send();
             return false;
 
         case MS_WHLD:
@@ -173,6 +188,7 @@ bool osa_process_keycode(uint16_t keycode, bool pressed) {
                 }
             }
             pointing_device_set_report(mouse_report);
+            pointing_device_send();
             return false;
 
         case MS_WHLL:
@@ -184,6 +200,7 @@ bool osa_process_keycode(uint16_t keycode, bool pressed) {
                 }
             }
             pointing_device_set_report(mouse_report);
+            pointing_device_send();
             return false;
 
         case MS_WHLR:
@@ -195,6 +212,7 @@ bool osa_process_keycode(uint16_t keycode, bool pressed) {
                 } 
             }
             pointing_device_set_report(mouse_report);
+            pointing_device_send();
             return false;
         
         case OA_PDSV:
@@ -313,6 +331,14 @@ bool osa_process_keycode(uint16_t keycode, bool pressed) {
                     tap_code16(LSFT(LCTL(LGUI(KC_COMMA))));
                 }else {
                     tap_code16(LGUI(KC_DOWN));
+                }
+            }
+            return false;
+
+        case OA_WSCR:
+            if(pressed) {
+                if(osa_detected_host_os()==OS_MACOS) {
+                    tap_code16(LSFT(LCTL(LGUI(KC_K))));
                 }
             }
             return false;

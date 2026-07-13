@@ -87,6 +87,10 @@
             "aliases": ["OA_WSBO"]
         },
         {
+            "key": "OA_WINDOW_SNAP_CENTER",
+            "aliases": ["OA_WSCR"]
+        },
+        {
             "key": "OA_WINDOW_SNAP_LEFT_UP_QUARTER",
             "aliases": ["OA_WSTL"]
         },
@@ -101,6 +105,6 @@
         {
             "key": "OA_WINDOW_SNAP_RIGHT_DOWN_QUARTER",
             "aliases": ["OA_WSBR"]
-        }
+        }        
     ]   
 }
